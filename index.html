@@ -120,6 +120,7 @@ footer {
   color: white;
   cursor: pointer;
   padding: 20px;
+  user-select: none;
 }
 
 .prev { left: 0; }
@@ -144,16 +145,12 @@ footer {
 
 <section id="home">
   <h2>Головна</h2>
-  <p style="text-align:center;">
-    Пропонуємо якісні послуги та демонструємо реальні виконані роботи.
-  </p>
+  <p style="text-align:center;">Якісні послуги та реальні виконані роботи.</p>
 </section>
 
 <section id="about">
   <h2>Про нас</h2>
-  <p>
-    Працюємо відповідально та якісно. Індивідуальний підхід до кожного клієнта.
-  </p>
+  <p>Працюємо відповідально та з досвідом.</p>
 </section>
 
 <section id="services">
@@ -162,7 +159,7 @@ footer {
     <div class="card">Ремонт квартир</div>
     <div class="card">Оздоблювальні роботи</div>
     <div class="card">Електромонтаж</div>
-    <div class="card">Сантехнічні роботи</div>
+    <div class="card">Сантехніка</div>
   </div>
 </section>
 
@@ -179,7 +176,6 @@ footer {
 <section id="contacts">
   <h2>Контакти</h2>
   <p><strong>Телефон:</strong> +38 0XX XXX XX XX</p>
-  <p><strong>Місто:</strong> Україна</p>
 </section>
 
 <footer>
@@ -188,10 +184,10 @@ footer {
 
 <!-- LIGHTBOX -->
 <div id="lightbox" onclick="closeLightbox()">
-  <span class="close">×</span>
-  <img id="lightbox-img">
-  <span class="prev" onclick="changePhoto(-1)">❮</span>
-  <span class="next" onclick="changePhoto(1)">❯</span>
+  <span class="close" onclick="event.stopPropagation(); closeLightbox()">×</span>
+  <img id="lightbox-img" onclick="event.stopPropagation()">
+  <span class="prev" onclick="event.stopPropagation(); changePhoto(-1)">❮</span>
+  <span class="next" onclick="event.stopPropagation(); changePhoto(1)">❯</span>
 </div>
 
 <script>
