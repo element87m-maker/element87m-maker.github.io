@@ -3,72 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ELEMENT — металеві конструкції</title>
+<title>ELEMENT</title>
 
 <style>
-body{margin:0;font-family:Arial,sans-serif;background:#f4f4f4;color:#333}
-header{background:#fff;padding:20px;text-align:center;border-bottom:2px solid #ddd}
-header h1{margin:0;font-size:36px;letter-spacing:3px}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f4f4;color:#222}
 
+/* HEADER */
+header{background:#fff;padding:20px;text-align:center;border-bottom:1px solid #ddd}
+header h1{margin:0;font-size:34px;letter-spacing:3px}
+
+/* PHONES */
 .phones{margin-top:15px;display:flex;justify-content:center;gap:15px;flex-wrap:wrap}
 .phone-btn{
-    display:flex;gap:8px;align-items:center;
-    border:2px solid #333;padding:10px 15px;
-    text-decoration:none;color:#333;font-size:17px
+  display:flex;align-items:center;gap:10px;
+  padding:12px 16px;border:2px solid #111;
+  text-decoration:none;color:#111;font-size:17px;
 }
-.phone-btn:hover{background:#333;color:#fff}
+.phone-btn:hover{background:#111;color:#fff}
+.phone-btn svg{width:22px;height:22px}
 
-.menu{background:#fff;padding:20px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.menu button{padding:12px 20px;border:2px solid #333;background:none;cursor:pointer}
-.menu button:hover{background:#333;color:#fff}
+/* MENU */
+.menu{padding:20px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.menu button{
+  padding:12px 20px;border:2px solid #111;
+  background:none;cursor:pointer;font-size:15px;
+}
+.menu button:hover{background:#111;color:#fff}
 
-.gallery{padding:30px 15px;text-align:center}
+/* GALLERY */
+.gallery{padding:25px;text-align:center}
 .photos{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-    gap:15px;
-    animation:fade .4s ease;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
 }
-.photo img{
-    width:100%;height:160px;object-fit:cover;
-    cursor:pointer;border-radius:4px
+.photos img{
+  width:100%;height:160px;object-fit:cover;
+  cursor:pointer;border-radius:6px;
+  animation:fadeUp .4s ease;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
 }
 
-@keyframes fade{
-    from{opacity:0;transform:scale(.96)}
-    to{opacity:1;transform:scale(1)}
-}
-
+/* MODAL */
 .modal{
-    display:none;position:fixed;inset:0;
-    background:rgba(0,0,0,.85);
-    justify-content:center;align-items:center;z-index:1000
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.95);
+  z-index:9999;
+  justify-content:center;
+  align-items:center;
+  animation:zoomIn .25s ease;
 }
-.modal img{max-width:90%;max-height:85%;animation:fade .3s ease}
-.close{position:absolute;top:20px;right:30px;font-size:40px;color:#fff;cursor:pointer}
-
-.preview-grid{
-    margin-top:40px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-    gap:15px
+@keyframes zoomIn{
+  from{transform:scale(.9);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
-.preview{border:2px solid #333;background:#fff;cursor:pointer}
-.preview img{width:100%;height:120px;object-fit:cover}
-.preview div{padding:10px;font-weight:bold}
+.modal img{
+  width:100vw;
+  height:100vh;
+  object-fit:contain;
+}
+.close,.prev,.next{
+  position:absolute;color:#fff;font-size:42px;cursor:pointer;
+  user-select:none;
+}
+.close{top:20px;right:30px}
+.prev{left:20px}
+.next{right:20px}
 
-.floating{position:fixed;bottom:20px;right:20px;z-index:2000}
-.main-btn{background:#333;color:#fff;padding:15px 20px;border-radius:40px;cursor:pointer}
-.messenger-list{display:none;flex-direction:column;gap:10px;margin-bottom:10px}
-.messenger{width:52px;height:52px;border-radius:50%}
+/* FLOATING */
+.floating{
+  position:fixed;bottom:20px;right:20px;
+  display:flex;flex-direction:column;gap:10px;
+  z-index:10000;
+}
+.float-btn{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 18px;border-radius:50px;
+  color:#fff;text-decoration:none;
+  box-shadow:0 6px 18px rgba(0,0,0,.3);
+  cursor:pointer
+}
+.call{background:#28a745}
+.write{background:#0d6efd}
 
-.viber{background:#7360f2}
-.telegram{background:#2aa1da}
-.whatsapp{background:#25d366}
+.messengers{display:none;flex-direction:column;gap:8px}
+.messengers.show{display:flex}
+.messengers a{
+  background:#fff;color:#000;
+  padding:12px 16px;border-radius:40px;
+  text-decoration:none;
+  display:flex;align-items:center;gap:10px;
+}
+.messengers svg{width:20px;height:20px}
 
+/* MOBILE */
 @media(max-width:600px){
-header h1{font-size:28px}
-.phone-btn,.menu button{width:100%;max-width:260px}
+  .float-btn span{display:none}
 }
 </style>
 </head>
@@ -78,56 +113,100 @@ header h1{font-size:28px}
 <header>
 <h1>ELEMENT</h1>
 <div class="phones">
-<a class="phone-btn" href="tel:+380978303655">📞 097-830-36-55</a>
-<a class="phone-btn" href="tel:+380971951219">📱 097-19-512-19</a>
+
+<a class="phone-btn" href="tel:+380978303655">
+<svg viewBox="0 0 24 24" fill="currentColor">
+<path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.2c1.1.4 2.3.6 3.6.6a1 1 0 011 1v3.5a1 1 0 01-1 1C9.4 21.1 2.9 14.6 2.9 6a1 1 0 011-1H7.4a1 1 0 011 1c0 1.2.2 2.4.6 3.6a1 1 0 01-.2 1L6.6 10.8z"/>
+</svg>
+097-830-36-55
+</a>
+
+<a class="phone-btn" href="tel:+380971951219">
+<svg viewBox="0 0 24 24" fill="currentColor">
+<path d="M17 2H7a2 2 0 00-2 2v16a2 2 0 002 2h10a2 2 0 002-2V4a2 2 0 00-2-2z"/>
+</svg>
+097-19-512-19
+</a>
+
 </div>
 </header>
 
 <div class="menu">
-<button onclick="loadGallery('parkan','Паркан')">Паркан</button>
-<button onclick="loadGallery('peryla','Перила')">Перила</button>
-<button onclick="loadGallery('shody','Сходи')">Сходи</button>
-<button onclick="loadGallery('hresty','Хрести')">Хрести</button>
-<button onclick="loadGallery('dymohid','Димохід та вентиляція')">Димохід</button>
-<button onclick="loadGallery('rizne','Різне')">Різне</button>
+<button onclick="show('parkan','Паркани')">Паркани</button>
+<button onclick="show('perila-ta-shody','Перила та сходи')">Перила та сходи</button>
+<button onclick="show('hresty-pozolota','Хрести позолота')">Хрести позолота</button>
+<button onclick="show('dymohid','Димохід')">Димохід</button>
+<button onclick="show('rizne','Різне')">Різне</button>
 </div>
 
 <div class="gallery">
-<h2 id="title">Наші роботи</h2>
+<h2 id="title">Оберіть розділ</h2>
 <div class="photos" id="photos"></div>
-
-<div class="preview-grid">
-<div class="preview" onclick="loadGallery('parkan','Паркан')"><img src="img/parkan/1.jpg"><div>Паркан</div></div>
-<div class="preview" onclick="loadGallery('peryla','Перила')"><img src="img/peryla/1.jpg"><div>Перила</div></div>
-<div class="preview" onclick="loadGallery('shody','Сходи')"><img src="img/shody/1.jpg"><div>Сходи</div></div>
-<div class="preview" onclick="loadGallery('hresty','Хрести')"><img src="img/hresty/1.jpg"><div>Хрести</div></div>
-<div class="preview" onclick="loadGallery('dymohid','Димохід та вентиляція')"><img src="img/dymohid/1.jpg"><div>Димохід</div></div>
-<div class="preview" onclick="loadGallery('rizne','Різне')"><img src="img/rizne/1.jpg"><div>Різне</div></div>
-</div>
 </div>
 
 <div class="modal" id="modal">
-<span class="close" onclick="modal.style.display='none'">×</span>
+<span class="close" onclick="closeModal()">×</span>
+<span class="prev" onclick="change(-1)">‹</span>
 <img id="modalImg">
+<span class="next" onclick="change(1)">›</span>
+</div>
+
+<div class="floating">
+<div class="messengers" id="messengers">
+<a href="viber://chat?number=%2B380978303655">
+<svg viewBox="0 0 24 24" fill="#7360f2"><path d="M12 2C6.5 2 2 6.1 2 11.2c0 2.9 1.5 5.5 4 7.3V22l4-2.2c.6.1 1.3.2 2 .2 5.5 0 10-4.1 10-9.2S17.5 2 12 2z"/></svg>
+Viber</a>
+
+<a href="https://t.me/element_metal" target="_blank">
+<svg viewBox="0 0 24 24" fill="#2aa1da"><path d="M2 12l20-9-5 18-6-4-4 3 1-5"/></svg>
+Telegram</a>
+
+<a href="https://wa.me/380978303655" target="_blank">
+<svg viewBox="0 0 24 24" fill="#25d366"><path d="M12 2a10 10 0 00-8.6 15.2L2 22l5-1.3A10 10 0 1012 2z"/></svg>
+WhatsApp</a>
+</div>
+
+<div class="float-btn write" onclick="toggle()">✉ <span>Написати</span></div>
+<a class="float-btn call" href="tel:+380978303655">📞 <span>Подзвонити</span></a>
 </div>
 
 <script>
-function loadGallery(folder,title){
-document.getElementById("title").innerText=title;
-const box=document.getElementById("photos");
-box.innerHTML="";
-for(let i=1;i<=12;i++){
-box.innerHTML+=`
-<div class="photo">
-<img src="img/${folder}/${i}.jpg" loading="lazy"
-onerror="this.style.display='none'"
-onclick="openImg(this.src)">
-</div>`;
+const data={
+  parkan:12,
+  "perila-ta-shody":14,
+  "hresty-pozolota":6,
+  dymohid:7,
+  rizne:4
+};
+
+let current=[],index=0;
+
+function show(folder,title){
+  document.getElementById("title").innerText=title;
+  photos.innerHTML="";
+  current=[];
+  for(let i=1;i<=data[folder];i++){
+    const src=`images/${folder}/${i}.jpg`;
+    const img=document.createElement("img");
+    img.src=src;
+    img.onclick=()=>openModal(i-1);
+    photos.appendChild(img);
+    current.push(src);
+  }
 }
+
+function openModal(i){
+  index=i;
+  modal.style.display="flex";
+  modalImg.src=current[index];
 }
-function openImg(src){
-modal.style.display="flex";
-modalImg.src=src;
+function closeModal(){modal.style.display="none"}
+function change(step){
+  index=(index+step+current.length)%current.length;
+  modalImg.src=current[index];
+}
+function toggle(){
+  messengers.classList.toggle("show");
 }
 </script>
 
