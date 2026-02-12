@@ -209,32 +209,34 @@ function toggle(){
   messengers.classList.toggle("show");
 }
 <script>
-let startX = 0;
-let endX = 0;
+document.addEventListener("DOMContentLoaded", () => {
 
-const modal = document.getElementById("modal");
+  let startX = 0;
+  let endX = 0;
 
-modal.addEventListener("touchstart", e => {
-  startX = e.touches[0].clientX;
-}, { passive: true });
+  const modal = document.getElementById("modal");
 
-modal.addEventListener("touchend", e => {
-  endX = e.changedTouches[0].clientX;
-  handleSwipe();
-}, { passive: true });
+  if (!modal) return;
 
-function handleSwipe() {
-  const diff = startX - endX;
+  modal.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+  }, { passive: true });
 
-  if (Math.abs(diff) > 50) {
-    if (diff > 0) {
-      change(1);   // свайп вліво → наступне
-    } else {
-      change(-1);  // свайп вправо → попереднє
+  modal.addEventListener("touchend", e => {
+    endX = e.changedTouches[0].clientX;
+    handleSwipe();
+  }, { passive: true });
+
+  function handleSwipe() {
+    const diff = startX - endX;
+    if (Math.abs(diff) > 50) {
+      diff > 0 ? change(1) : change(-1);
     }
   }
-}
+
+});
 </script>
+
 
 </body>
 </html>
