@@ -192,7 +192,8 @@ function show(folder,title){
   for(let i=1;i<=data[folder];i++){
     const src=`images/${folder}/${i}.jpg`;
     const img=document.createElement("img");
-    img.src=src;
+    img.src = src;
+    img.loading = "lazy";
     img.onclick=()=>openModal(i-1);
     photos.appendChild(img);
     current.push(src);
