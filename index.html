@@ -138,6 +138,7 @@ header h1{margin:0;font-size:34px;letter-spacing:3px}
 <button onclick="show('dymohid','Димохід')">Димохід</button>
 <button onclick="show('navis','Навіс')">Навіс</button>
 <button onclick="show('krynytsi','Криниці')">Криниці</button>
+<button onclick="show('sad-ta-vidpochynok','Сад та відпочинок')">Сад та відпочинок</button>
 <button onclick="show('rizne','Різне')">Різне</button>
 </div>
 
@@ -180,6 +181,7 @@ const data={
   dymohid:29,
   navis:3,
   krynytsi:8,
+  "sad-ta-vidpochynok":0,
   rizne:69
 };
 
@@ -214,7 +216,8 @@ function toggle(){
   messengers.classList.toggle("show");
 }
 </script>
-  <script>
+
+<script>
 /* ===== SWIPE FOR MOBILE MODAL ===== */
 (function () {
 
@@ -234,16 +237,15 @@ function toggle(){
 
     if (Math.abs(distance) > 60) {
       if (distance > 0) {
-        change(1);   // swipe left → next
+        change(1);
       } else {
-        change(-1);  // swipe right → prev
+        change(-1);
       }
     }
   }, { passive: true });
 
 })();
 </script>
-
 
 </body>
 </html>
