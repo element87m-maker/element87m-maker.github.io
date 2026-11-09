@@ -106,7 +106,7 @@ header h1{margin:0;font-size:34px;letter-spacing:3px}
   .float-btn span{display:none}
 }
 </style>
-</head>
+<script type="text/javascript" nonce="ee4c52d02ea3404fac1c2068f13" src="//local.adguard.org?ts=1794247396994&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000007a088210bfd0148a60450b74%26fn%3Dindex-updated.html%26cd%3Dattachment%26ts%3D498402%26p%3Dfs%26cid%3D1%26sig%3D171a34f99b8ba66d574d6b5e542794da8bf48839e8cb40a200d5f596a95c60fc%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="ee4c52d02ea3404fac1c2068f13" src="//local.adguard.org?ts=1794247396994&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 
 <body>
 
@@ -174,46 +174,115 @@ WhatsApp</a>
 </div>
 
 <script>
-const data={
-  parkan:113,
-  "perila-ta-shody":29,
-  "hresty-pozolota":22,
-  dymohid:29,
-  navis:3,
-  krynytsi:8,
-  "sad-ta-vidpochynok":0,
-  rizne:69
-};
+/* Фотографії автоматично завантажуються зі сховища GitHub */
+const GITHUB_OWNER = "element87m-maker";
+const GITHUB_REPO = "element87m-maker.github.io";
+const GITHUB_BRANCH = "main";
 
-let current=[],index=0;
+let current = [], index = 0;
+const galleryCache = new Map();
+let galleryRequest = 0;
 
-function show(folder,title){
-  document.getElementById("title").innerText=title;
-  photos.innerHTML="";
-  current=[];
-  for(let i=1;i<=data[folder];i++){
-    const src=`images/${folder}/${i}.jpg`;
-    const img=document.createElement("img");
-    img.src = src;
-    img.loading = "lazy";
-    img.onclick=()=>openModal(i-1);
-    photos.appendChild(img);
-    current.push(src);
+const photosElement = document.getElementById("photos");
+const titleElement = document.getElementById("title");
+const modalElement = document.getElementById("modal");
+const modalImageElement = document.getElementById("modalImg");
+const messengersElement = document.getElementById("messengers");
+
+async function getFolderImages(folder) {
+  if (galleryCache.has(folder)) return galleryCache.get(folder);
+
+  const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/images/${encodeURIComponent(folder)}?ref=${GITHUB_BRANCH}`;
+  const response = await fetch(apiUrl, { headers: { "Accept": "application/vnd.github+json" } });
+
+  if (response.status === 404) return [];
+  if (!response.ok) {
+    throw new Error(`GitHub API: ${response.status}`);
+  }
+
+  const files = await response.json();
+  if (!Array.isArray(files)) return [];
+
+  const images = files
+    .filter(file => file.type === "file" && /\.(jpe?g|png|webp|gif)$/i.test(file.name))
+    .sort((a, b) => {
+      const aNumber = Number((a.name.match(/^\d+/) || [])[0]);
+      const bNumber = Number((b.name.match(/^\d+/) || [])[0]);
+      if (Number.isFinite(aNumber) && Number.isFinite(bNumber) && aNumber !== bNumber) {
+        return aNumber - bNumber;
+      }
+      return a.name.localeCompare(b.name, "uk", { numeric: true, sensitivity: "base" });
+    })
+    .map(file => file.download_url)
+    .filter(Boolean);
+
+  galleryCache.set(folder, images);
+  return images;
+}
+
+async function show(folder, title) {
+  const requestId = ++galleryRequest;
+  titleElement.innerText = title;
+  photosElement.innerHTML = "";
+  current = [];
+  index = 0;
+  modalElement.style.display = "none";
+
+  const loadingMessage = document.createElement("p");
+  loadingMessage.textContent = "Завантаження фотографій...";
+  photosElement.appendChild(loadingMessage);
+
+  try {
+    const images = await getFolderImages(folder);
+    if (requestId !== galleryRequest) return;
+
+    current = images;
+    photosElement.innerHTML = "";
+
+    if (images.length === 0) {
+      const emptyMessage = document.createElement("p");
+      emptyMessage.textContent = "У цьому розділі поки немає фотографій.";
+      photosElement.appendChild(emptyMessage);
+      return;
+    }
+
+    images.forEach((src, i) => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = `${title} — фото ${i + 1}`;
+      img.loading = "lazy";
+      img.onclick = () => openModal(i);
+      photosElement.appendChild(img);
+    });
+  } catch (error) {
+    if (requestId !== galleryRequest) return;
+    photosElement.innerHTML = "";
+    const errorMessage = document.createElement("p");
+    errorMessage.textContent = "Не вдалося завантажити фотографії. Спробуйте оновити сторінку.";
+    photosElement.appendChild(errorMessage);
+    console.error(error);
   }
 }
 
-function openModal(i){
-  index=i;
-  modal.style.display="flex";
-  modalImg.src=current[index];
+function openModal(i) {
+  if (!current.length) return;
+  index = i;
+  modalElement.style.display = "flex";
+  modalImageElement.src = current[index];
 }
-function closeModal(){modal.style.display="none"}
-function change(step){
-  index=(index+step+current.length)%current.length;
-  modalImg.src=current[index];
+
+function closeModal() {
+  modalElement.style.display = "none";
 }
-function toggle(){
-  messengers.classList.toggle("show");
+
+function change(step) {
+  if (!current.length) return;
+  index = (index + step + current.length) % current.length;
+  modalImageElement.src = current[index];
+}
+
+function toggle() {
+  messengersElement.classList.toggle("show");
 }
 </script>
 
