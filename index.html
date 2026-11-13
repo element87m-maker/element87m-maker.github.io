@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101114">
+<script type="text/javascript" nonce="2dda58b3663542a0a9ac945b604" src="//local.adguard.org?ts=1794589923356&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000001d80821086679ad4df243f8b%26fn%3Dindex-element-fast-no-reupload.html%26cd%3Dattachment%26ts%3D498497%26p%3Dfs%26cid%3D1%26sig%3Db55cd5580d12093709bd9870f189a4fd089041157c16656f20f36af01d157fdf%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="2dda58b3663542a0a9ac945b604" src="//local.adguard.org?ts=1794589923356&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><link rel="preload" as="image" href="images/parkan/1.jpg" fetchpriority="high">
 <title>ELEMENT — Металоконструкції</title>
 <style>
 :root{--bg:#101114;--panel:#19191e;--panel2:#202027;--text:#f5f5f7;--muted:#a7a7b2;--orange:#ff7900;--line:#303038}
@@ -94,14 +95,14 @@ footer{border-top:1px solid var(--line);background:#0b0b0e;padding:35px clamp(16
     <a class="small-link" href="#gallery">Переглянути роботи ↓</a>
   </div>
   <div class="categories">
-    <button class="category" onclick="show('parkan','Паркани')"><img src="images/parkan/Gemini_Generated_Image_93hia493hia493hi.jpg" alt=""><span class="category-name">Паркани</span><span class="category-arrow">→</span></button>
-    <button class="category" onclick="show('perila-ta-shody','Перила та сходи')"><img src="images/perila-ta-shody/1.jpg" alt=""><span class="category-name">Перила та сходи</span><span class="category-arrow">→</span></button>
-    <button class="category" onclick="show('hresty-pozolota','Хрести позолота')"><img src="images/hresty-pozolota/3.jpg" alt=""><span class="category-name">Хрести позолота</span><span class="category-arrow">→</span></button>
-    <button class="category" onclick="show('dymohid','Димохід')"><img src="images/dymohid/29.jpg" alt=""><span class="category-name">Димохід</span><span class="category-arrow">→</span></button>
-    <button class="category" onclick="show('navis','Навіс')"><img src="images/navis/1.jpg" alt=""><span class="category-name">Навіс</span><span class="category-arrow">→</span></button>
-    <button class="category" onclick="show('krynytsi','Криниці')"><img src="images/krynytsi/5.jpg" alt=""><span class="category-name">Криниці</span><span class="category-arrow">→</span></button>
-    <button class="category" onclick="show('sad-ta-vidpochynok','Сад та відпочинок')"><img src="images/sad-ta-vidpochynok/IMG_20260704_142959.jpg" alt=""><span class="category-name">Сад та відпочинок</span><span class="category-arrow">→</span></button>
-    <button class="category" onclick="show('rizne','Різне')"><img src="images/rizne/1.jpg" alt=""><span class="category-name">Різне</span><span class="category-arrow">→</span></button>
+    <button class="category" onclick="show('parkan','Паркани')"><img loading="lazy" decoding="async" src="images/parkan/Gemini_Generated_Image_93hia493hia493hi.jpg" alt=""><span class="category-name">Паркани</span><span class="category-arrow">→</span></button>
+    <button class="category" onclick="show('perila-ta-shody','Перила та сходи')"><img loading="lazy" decoding="async" src="images/perila-ta-shody/1.jpg" alt=""><span class="category-name">Перила та сходи</span><span class="category-arrow">→</span></button>
+    <button class="category" onclick="show('hresty-pozolota','Хрести позолота')"><img loading="lazy" decoding="async" src="images/hresty-pozolota/3.jpg" alt=""><span class="category-name">Хрести позолота</span><span class="category-arrow">→</span></button>
+    <button class="category" onclick="show('dymohid','Димохід')"><img loading="lazy" decoding="async" src="images/dymohid/29.jpg" alt=""><span class="category-name">Димохід</span><span class="category-arrow">→</span></button>
+    <button class="category" onclick="show('navis','Навіс')"><img loading="lazy" decoding="async" src="images/navis/1.jpg" alt=""><span class="category-name">Навіс</span><span class="category-arrow">→</span></button>
+    <button class="category" onclick="show('krynytsi','Криниці')"><img loading="lazy" decoding="async" src="images/krynytsi/5.jpg" alt=""><span class="category-name">Криниці</span><span class="category-arrow">→</span></button>
+    <button class="category" onclick="show('sad-ta-vidpochynok','Сад та відпочинок')"><img loading="lazy" decoding="async" src="images/sad-ta-vidpochynok/IMG_20260704_142959.jpg" alt=""><span class="category-name">Сад та відпочинок</span><span class="category-arrow">→</span></button>
+    <button class="category" onclick="show('rizne','Різне')"><img loading="lazy" decoding="async" src="images/rizne/1.jpg" alt=""><span class="category-name">Різне</span><span class="category-arrow">→</span></button>
   </div>
 </section>
 
@@ -180,7 +181,7 @@ async function show(folder,title) {
     }
     images.forEach((src,i) => {
       const img = document.createElement("img");
-      img.src = src; img.loading = "lazy"; img.alt = title + " — фото " + (i+1);
+      img.src = src; img.loading = "lazy"; img.decoding = "async"; img.alt = title + " — фото " + (i+1);
       img.onclick = () => openModal(i);
       img.onerror = () => { img.style.display = "none"; };
       photosElement.appendChild(img);
